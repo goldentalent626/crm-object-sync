@@ -1,3 +1,9 @@
+![Containerization Available](https://img.shields.io/badge/Containerization-Available-blue)
+
+> ⚠️ **For Docker users:**  
+> Switch to the [`containerization`](https://github.com/hubspotdev/crm-object-sync/tree/containerization) branch for Docker setup and usage instructions.
+
+
 # CRM Object Sync
 
 A demonstration of best integration practices for syncing CRM contact records between HubSpot and external applications for product management use cases.
@@ -12,7 +18,6 @@ A demonstration of best integration practices for syncing CRM contact records be
   - [Authentication](#authentication)
   - [Contact Management](#contact-management)
 - [Available Scripts](#available-scripts)
-- [Project Structure](#project-structure)
 - [Dependencies](#dependencies)
   - [Core](#core)
   - [Development](#development)
