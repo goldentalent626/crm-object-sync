@@ -12,16 +12,27 @@ jobs:
 
     steps:
       - name: Send repository update event
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          REPO: ${{ github.repository }}
+          COMMIT: ${{ github.sha }}
         run: |
           curl -X POST -H "Authorization: token ${{ secrets.GH_PAT }}" \
             -H "Accept: application/vnd.github.v3+json" \
+            -H "Content-Type: application/json" \
             https://api.github.com/repos/hubspotdev/CODE-Hub/dispatches \
-            -d '{
-              "event_type": "update-meta-repo",
-              "client_payload": {
-                "repo": "'"${{ github.repository }}"'",
-                "commit": "'"${{ github.sha }}"'",
-                "pr_title": "'"${{ github.event.pull_request.title }}"'",
-                "pr_url": "'"${{ github.event.pull_request.html_url }}"'"
-              }
-            }'
+            -d "$(jq -n \
+              --arg repo "$REPO" \
+              --arg commit "$COMMIT" \
+              --arg pr_title "$PR_TITLE" \
+              --arg pr_url "$PR_URL" \
+              '{
+                event_type: "update-meta-repo",
+                client_payload: {
+                  repo: $repo,
+                  commit: $commit,
+                  pr_title: $pr_title,
+                  pr_url: $pr_url
+                }
+              }')"
